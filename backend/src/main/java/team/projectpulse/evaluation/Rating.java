@@ -1,9 +1,11 @@
 package team.projectpulse.evaluation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import team.projectpulse.rubric.Criterion;
 import jakarta.persistence.*;
 
 @Entity
+@SuppressFBWarnings(value = "CT_CONSTRUCTOR_THROW", justification = "Constructors validate an externally supplied score against the criterion maximum; persisting an invalid Rating would violate the entity invariant.")
 public class Rating {
 
     @Id

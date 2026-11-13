@@ -29,14 +29,24 @@ reviewed without relying on an analyzer's message alone.
 
 ## Slice triage (Part 2)
 
-Pending the assigned digit.  Each row added here will include source location,
-rule, verdict (real / false positive / not worth it), the exact record of the
-decision, and a one-line reason.
+Slice 5 — Evaluations and rubrics.  `Rating`'s `UncommentedEmptyConstructor`
+is handled by D2 and is intentionally not duplicated here.
+
+| File and location | Rule | Verdict | Record | Reason |
+| --- | --- | --- | --- | --- |
+| `evaluation/Rating`, constructors | `CT_CONSTRUCTOR_THROW` (2) | Not worth it | Class-level `@SuppressFBWarnings` | Both constructors call the score validator; rejection is required to preserve the `0..criterion.maxScore` entity invariant before persistence. |
+| `evaluation/EvaluationService`, role check | `LiteralsFirstInComparisons` | Real | Literal-first comparison; baseline entry removed | A nonstandard `GrantedAuthority` may return null; putting the constant on the receiver avoids a 500 without changing ordinary role matching. |
+| `rubric/CriterionSpecs`, class | `InstantiableUtilityClass` | Real | Private constructor; baseline entry removed | The type contains only static specification factories and should not be instantiated. |
+| `rubric/CriterionSpecs`, search terms | `UseLocaleWithCaseConversions` (2) | Real | `Locale.ROOT`; baseline entry removed | Search terms are compared to database `LOWER(...)` values and must not change with the server's default locale. |
+| `rubric/RubricSpecs`, class | `InstantiableUtilityClass` | Real | Private constructor; baseline entry removed | The type contains only static specification factories and should not be instantiated. |
+| `rubric/RubricSpecs`, search term | `UseLocaleWithCaseConversions` | Real | `Locale.ROOT`; baseline entry removed | Same locale-independent database-search invariant as `CriterionSpecs`. |
 
 ## Test evidence (Part 3)
 
-Pending the slice.  For a finding judged real and testable, record the test
-commit, the failing command before the fix, and the passing command after it.
+`CriterionSpecsTest#containsCriterionUsesLocaleIndependentLowercaseSearchTerm`
+sets the default locale to Turkish and verifies that `TITLE` yields `%title%`,
+not `%tıtle%`.  Commit `87668ad` added this test before the production fix. Its
+first run failed before the fix with the expected `%tıtle%` actual argument.
 
 ## Verification log
 
@@ -45,3 +55,6 @@ commit, the failing command before the fix, and the passing command after it.
 - 2026-11-13: counted the project-decision entries in the checked-in
   baselines: D1 219, D2 40, D3 13, D4 4.  The D3 difference from the handout
   was recorded above.
+- 2026-11-13: the locale regression test failed before the production fix and
+  passed after it (`mvn test -Dtest=CriterionSpecsTest`, using the workspace
+  Maven cache because the wrapper's PowerShell launcher is broken here).
