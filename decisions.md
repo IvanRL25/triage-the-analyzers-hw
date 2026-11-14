@@ -74,3 +74,6 @@ first run failed before the fix with the expected `%tıtle%` actual argument.
   generated the PMD report. SpotBugs confirmed the two `Rating` constructor
   findings are gone; the full analyzer-only gate was re-run after the final
   fixes.
+- 2026-11-13: final focused verification passed:
+  `CriterionSpecsTest` ran with one test, zero failures, and zero errors on
+  the committed branch.
