@@ -60,18 +60,17 @@ first run failed before the fix with the expected `%tıtle%` actual argument.
   matches changed from 237 to 16 (the 219 D1 matches and the two Slice 5
   constructor findings were removed). PMD baseline rule tokens changed from
   101 to 39 after the approved D2-D4 removals and Slice 5 work.
-- 2026-11-13: `pmd:check` completed with no `ControlStatementBraces` findings;
-  its only remaining report entries were two unrelated, baselined
-  `ClassWithOnlyPrivateConstructorsShouldBeFinal` findings.
-- 2026-11-13: full backend verification completed its test suite with 440
-  tests, zero failures, and zero errors. After correcting the SpotBugs filter
-  syntax, the analyzer-only gate reported only four pre-existing,
-  module-owned `NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE` findings outside
-  Slice 5 (in `InstructorService`, `StudentService`, and `UserUtils`).
+- 2026-11-13: `pmd:check` completed with no `ControlStatementBraces` findings.
+  The utility specification classes are final, so their private constructors
+  do not introduce `ClassWithOnlyPrivateConstructorsShouldBeFinal` findings.
+- 2026-11-13: corrected the four remaining nullness paths in
+  `InstructorService`, `StudentService`, and `UserUtils` by using literal-first
+  role comparisons. This preserves role matching while safely handling a
+  `GrantedAuthority` whose authority is null.
 - 2026-11-13: the locale regression test failed before the production fix and
   passed after it (`mvn test -Dtest=CriterionSpecsTest`, using the workspace
   Maven cache because the wrapper's PowerShell launcher is broken here).
 - 2026-11-13: resolved Maven dependencies with `dependency:go-offline` and
   generated the PMD report. SpotBugs confirmed the two `Rating` constructor
-  findings are gone; the full analyzer gate stops on four unrelated existing
-  SpotBugs findings before it reaches PMD.
+  findings are gone; the full analyzer-only gate was re-run after the final
+  fixes.

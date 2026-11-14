@@ -4,7 +4,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Locale;
 
-public class CriterionSpecs {
+public final class CriterionSpecs {
 
     private CriterionSpecs() {
     }

@@ -55,7 +55,7 @@ public class UserUtils {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         boolean hasInstructorRole = authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_instructor"));
+                .anyMatch(grantedAuthority -> "ROLE_instructor".equals(grantedAuthority.getAuthority()));
         // If the user is an instructor, return the default course id of the instructor
         // If the user is a student, return the course id of the student
         if (hasInstructorRole) {
@@ -70,7 +70,7 @@ public class UserUtils {
         // If the user is a student, return the section id of the student
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean hasInstructorRole = authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_instructor"));
+                .anyMatch(grantedAuthority -> "ROLE_instructor".equals(grantedAuthority.getAuthority()));
         if (hasInstructorRole) {
             return getInstructorDefaultSectionId();
         } else {
@@ -119,6 +119,6 @@ public class UserUtils {
     public boolean hasRole(String role) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(role));
+                .anyMatch(grantedAuthority -> role.equals(grantedAuthority.getAuthority()));
     }
 }

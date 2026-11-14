@@ -4,7 +4,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Locale;
 
-public class RubricSpecs {
+public final class RubricSpecs {
 
     private RubricSpecs() {
     }
