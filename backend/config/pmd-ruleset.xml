@@ -13,5 +13,14 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>PMD quickstart, with Project Pulse's decisions.</description>
     <rule ref="rulesets/java/quickstart.xml">
+        <!-- JPA entities require accessible no-argument constructors; the remaining
+             findings are intentional framework, serialization, or report-model
+             boilerplate. Constructor comments would only restate that purpose. -->
+        <exclude name="UncommentedEmptyConstructor"/>
+        <exclude name="UnnecessaryConstructor"/>
+        <!-- SLF4J parameterized calls defer formatting. The project’s affected log
+             calls pass existing values, not expensive expressions, so level guards
+             duplicate the logger’s own check. -->
+        <exclude name="GuardLogStatement"/>
     </rule>
 </ruleset>

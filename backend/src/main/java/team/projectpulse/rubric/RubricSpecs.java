@@ -2,11 +2,16 @@ package team.projectpulse.rubric;
 
 import org.springframework.data.jpa.domain.Specification;
 
-public class RubricSpecs {
+import java.util.Locale;
+
+public final class RubricSpecs {
+
+    private RubricSpecs() {
+    }
 
     public static Specification<Rubric> containsRubricName(String providedRubricName) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(criteriaBuilder.lower(root.get("rubricName")), "%" + providedRubricName.toLowerCase() + "%");
+                criteriaBuilder.like(criteriaBuilder.lower(root.get("rubricName")), "%" + providedRubricName.toLowerCase(Locale.ROOT) + "%");
     }
 
     public static Specification<Rubric> belongsToCourse(Integer courseId) {
