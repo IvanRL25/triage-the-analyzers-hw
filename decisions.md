@@ -63,6 +63,11 @@ first run failed before the fix with the expected `%tıtle%` actual argument.
 - 2026-11-13: `pmd:check` completed with no `ControlStatementBraces` findings;
   its only remaining report entries were two unrelated, baselined
   `ClassWithOnlyPrivateConstructorsShouldBeFinal` findings.
+- 2026-11-13: full backend verification completed its test suite with 440
+  tests, zero failures, and zero errors. After correcting the SpotBugs filter
+  syntax, the analyzer-only gate reported only four pre-existing,
+  module-owned `NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE` findings outside
+  Slice 5 (in `InstructorService`, `StudentService`, and `UserUtils`).
 - 2026-11-13: the locale regression test failed before the production fix and
   passed after it (`mvn test -Dtest=CriterionSpecsTest`, using the workspace
   Maven cache because the wrapper's PowerShell launcher is broken here).

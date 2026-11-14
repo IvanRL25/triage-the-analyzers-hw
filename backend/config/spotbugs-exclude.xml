@@ -10,7 +10,7 @@
   <!-- Hibernate owns persistence-entity associations and proxies; copying an
        entity reference or relationship collection can detach managed state. -->
   <Match>
-    <Class annotation="jakarta.persistence.Entity"/>
+    <Annotation name="jakarta.persistence.Entity"/>
     <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
   </Match>
   <!-- Transport DTOs intentionally expose their mutable payload for JSON
@@ -23,15 +23,15 @@
        Their collaborators are shared dependency-injection singletons, which
        must be retained by identity rather than defensively copied. -->
   <Match>
-    <Class annotation="org.springframework.stereotype.Component"/>
+    <Annotation name="org.springframework.stereotype.Component"/>
     <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
   </Match>
   <Match>
-    <Class annotation="org.springframework.stereotype.Service"/>
+    <Annotation name="org.springframework.stereotype.Service"/>
     <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
   </Match>
   <Match>
-    <Class annotation="org.springframework.web.bind.annotation.RestController"/>
+    <Annotation name="org.springframework.web.bind.annotation.RestController"/>
     <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
   </Match>
   <!-- These five classes are boundary models: JSON report/template payloads,
